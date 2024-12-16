@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App and Survival Game</title>
+    <link rel="stylesheet" href="i.css">
+    <style>
+
+        .character-card { border: 1px solid #000; padding: 10px; margin: center; }
+        .stamina-bar { width: 100%; height: 20px; background: #ddd; }
+        .stamina-bar span { display: block; height: 100%; background: green; }
+        .weather-box, .inventory { margin: 10px 0; }
+
+        body {
+          font-family: Arial, sans-serif;
+          margin: 20px;
+        }
+        #stamina-fill {
+          width: 100%;
+          height: 100%;
+          background-color: green;
+          transition: width 0.3s;
+        }
+        .weather {
+          margin: 10px 0;
+        }
+        .store {
+          margin-top: 20px;
+        }
+
+        .character-image {
+        width: 150px; /* 원하는 너비 */
+        height: 150px; /* 원하는 높이 */
+        object-fit: cover; /* 이미지를 영역에 맞게 잘라냄 */
+    }
+
+    #consoleOutput {
+      background-color: #007BFF;
+      color: #ffffff;
+      border: 2px solid #ddd;
+      padding: 10px;
+      margin-top: 10px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-size: 14px;
+    }
+      </style>
+</head>
+<h1>생존 게임</h1>
+<div id="character-selection">
+  <h2>캐릭터 선택</h2>
+  <!-- 캐릭터 카드 -->
+  <div class="character-card">
+    <img class="character-image" src="IMG_3781.jpeg" alt="고독한 생존 전문가" />
+    <h3>고독한 생존 전문가</h3>
+    <p>난이도: 보통</p>
+    <button onclick="startGame('고독한 생존 전문가')">선택</button>
+  </div>
+  <div class="character-card">
+    <img class="character-image" src="IMG_3779.jpeg" alt="기후학원청소년" />
+    <h3>기후학원청소년</h3>
+    <p>난이도: 어려움</p>
+    <button onclick="startGame('기후학원청소년')">선택</button>
+  </div>
+  <div class="character-card">
+    <img class="character-image" src="IMG_3777.jpeg" alt="약초사/치유사" />
+    <h3>약초사/치유사</h3>
+    <p>난이도: 보통</p>
+    <button onclick="startGame('약초사/치유사')">선택</button>
+  </div>
+  <div class="character-card">
+    <img class="character-image" src="IMG_3778.jpeg" alt="미래형 환경 전사" />
+    <h3>미래형 환경 전사</h3>
+    <p>난이도: 쉬움</p>
+    <button onclick="startGame('미래형 환경 전사')">선택</button>
+  </div>
+  <div class="character-card">
+    <img class="character-image" src="IMG_3776.jpeg" alt="여행가/탐험가" />
+    <h3>여행가/탐험가</h3>
+    <p>난이도: 보통</p>
+    <button onclick="startGame('여행가/탐험가')">선택</button>
+  </div>
+  <div class="character-card">
+    <img class="character-image" src="IMG_3782.jpeg" alt="고대 부족 생존자" />
+    <h3>고대 부족 생존자</h3>
+    <p>난이도: 보통</p>
+    <button onclick="startGame('고대 부족 생존자')">선택</button>
+  </div>
+  <div class="character-card">
+    <img class="character-image" src="IMG_3783.jpeg" alt="유량 예술가" />
+    <h3>유량 예술가</h3>
+    <p>난이도: 어려움</p>
+    <button onclick="startGame('유량 예술가')">선택</button>
+  </div>
+  <div class="character-card">
+    <img class="character-image" src="IMG_3786.jpeg" alt="사냥꾼" />
+    <h3>사냥꾼</h3>
+    <p>난이도: 쉬움</p>
+    <button onclick="startGame('사냥꾼')">선택</button>
+  </div>
+  <div class="character-card">
+    <img class="character-image" src="IMG_3784.jpeg" alt="생존 수리공" />
+    <h3>생존 수리공</h3>
+    <p>난이도: 쉬움</p>
+    <button onclick="startGame('생존 수리공')">선택</button>
+  </div>
+  <div class="character-card">
+    <img class="character-image" src="IMG_3785.jpeg" alt="마법사" />
+    <h3>마법사</h3>
+    <p>난이도: 치트키</p>
+    <button onclick="startGame('마법사')">선택</button>
+  </div>
+  <div class="character-card">
+    <img class="character-image" src="IMG_3780.jpeg" alt="동물 조련사" />
+    <h3>동물 조련사</h3>
+    <p>난이도: 보통</p>
+    <button onclick="startGame('동물 조련사')">선택</button>
+  </div>
+  <div class="character-card">
+    <img class="character-image" src="IMG_3787.jpeg" alt="망명자/추방자" />
+    <h3>망명자/추방자</h3>
+    <p>난이도: ???</p>
+    <button onclick="startGame('망명자/추방자')">선택</button>
+  </div>
+</div>
+<div id="game-screen" style="display: none;">
+  <h2>게임 화면</h2>
+  <div class="weather-box">날씨: <span id="weather-info"></span></div>
+  <h3>스테미나</h3>
+  <div class="stamina-bar">
+    <span id="stamina-fill" style="width: 100%;"></span>
+  </div>
+  
+  <div class="inventory">
+    <h3>인벤토리</h3>
+    <ul id="inventory-list"></ul>
+  </div>
+
+  <div id="consoleOutput" style = "margin: 10px; padding: 20px;"></div>
+
+  <button onclick="endTurn()">턴 종료</button>
+</div>
+<div class="container">
+    <h1>Weather App</h1>
+    <input type="text" id="cityInput" placeholder="Enter city name" />
+    <button id="getWeather">Get Weather</button>
+    <div id="weatherResult"></div>
+</div>
+  
+  <div class="weather">
+    <h3>현재 날씨</h3>
+    <p id="weather-status">날씨 로드 중...</p>
+  </div>
+  
+  <div class="store">
+    <h3>거래소</h3>
+    <button id="buy-food">음식 구매 (10 코인)</button>
+    <p>남은 돈: <span id="money">50</span> 코인</p>
+  </div>
+<script>
+  let selectedCharacter = null;
+  const originalConsoleLog = console.log;
+  const consoleOutput = document.getElementById('consoleOutput');
+
+  console.log = function(message) {
+      // 기존 console.log도 호출 (개발자 도구에 출력 유지)
+      originalConsoleLog(message);
+
+      // HTML에 추가
+      const newMessage = document.createElement('div');
+      newMessage.textContent = message;
+      consoleOutput.appendChild(newMessage);
+    };
+
+  function startGame(characterName) {
+    selectedCharacter = characters.find((char) => char.name === characterName);
+    document.getElementById("character-selection").style.display = "none";
+    document.getElementById("game-screen").style.display = "block";
+    console.log(`${selectedCharacter.name} 선택됨!`);
+    // 게임 초기화
+  }
+
+  function endTurn() {
+    console.log("턴 종료!");
+    // 날씨 효과 및 스테미나 소모 로직 호출
+  }
+</script>
+<script src="i.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

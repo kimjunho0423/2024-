@@ -1,0 +1,81 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f0f8ff;
+    text-align: center;
+    margin: 0;
+    padding: 50px;
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+input {
+    padding: 10px;
+    font-size: 16px;
+    width: 70%;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+#weatherResult {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+}
+
+.character-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 15px auto;
+    max-width: 300px;
+    background: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+.character-card h3 {
+    color: #007BFF;
+}
+.character-card button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.character-card button:hover {
+    background: #218838;
+}
+
+.character-image {
+    width: 150px; /* 원하는 너비 */
+    height: 150px; /* 원하는 높이 */
+    object-fit: cover; /* 이미지를 영역에 맞게 잘라냄 */
+}
